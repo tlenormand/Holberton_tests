@@ -7,6 +7,7 @@ Execute this test: python3 -m unittest tests/test_models/test_rectangle.py
 """
 
 import unittest
+import pycodestyle
 from models.base import Base
 from models.rectangle import Rectangle
 from os.path import exists
@@ -89,6 +90,13 @@ class TestRectangle(unittest.TestCase):
     def test_subclass(self):
         """fuction that test if Rectangle is a subclass of Base"""
         self.assertTrue(issubclass(Rectangle, Base))
+
+    def test_conformance(self):
+        """Test that we conform to PEP-8."""
+        style = pycodestyle.StyleGuide(quiet=True)
+        result = style.check_files(['models/rectangle.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (pycodestyle).")
 
     def test_valid(self):
         """fuction that test for good assignment of differents value"""

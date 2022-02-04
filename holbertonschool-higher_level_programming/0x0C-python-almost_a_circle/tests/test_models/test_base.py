@@ -7,6 +7,7 @@ Execute this test: python3 -m unittest tests/test_models/test_base.py
 """
 
 import unittest
+import pycodestyle
 from models.base import Base
 
 
@@ -40,6 +41,13 @@ class TestBase(unittest.TestCase):
 
         # function documentation
         # not implemented
+
+    def test_conformance(self):
+        """Test that we conform to PEP-8."""
+        style = pycodestyle.StyleGuide(quiet=True)
+        result = style.check_files(['models/base.py'])
+        self.assertEqual(result.total_errors, 0,
+                         "Found code style errors (pycodestyle).")
 
     def test_many_created(self):
         """fuction that test for good assignment of differents id value"""
