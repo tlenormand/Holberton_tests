@@ -7,7 +7,7 @@ Execute this test: python3 -m unittest tests/test_models/test_base.py
 
 import unittest
 import pycodestyle
-from models import base#!/usr/bin/python3
+from models import base
 """
 Unittest for "base.py"
 Execute all tests: python3 -m unittest discover tests

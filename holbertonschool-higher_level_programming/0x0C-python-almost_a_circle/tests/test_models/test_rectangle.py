@@ -190,7 +190,12 @@ class TestRectangle(unittest.TestCase):
         """fuction that test for ValueError"""
         with self.assertRaises(ValueError):
             r1 = Rectangle(10, 2)
-            r1.width = 0
+            r1.height = 0
+
+    def test_zero_height2(self):
+        """fuction that test for ValueError"""
+        with self.assertRaises(ValueError):
+            r1 = Rectangle(10, 0)
 
     # TypeError
 
