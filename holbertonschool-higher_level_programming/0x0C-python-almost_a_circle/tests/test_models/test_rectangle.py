@@ -14,6 +14,7 @@ import io
 from contextlib import redirect_stdout
 Rectangle = rectangle.Rectangle
 
+
 class TestRectangle(unittest.TestCase):
     """
     class that test the max integer function
@@ -230,6 +231,50 @@ class TestRectangle(unittest.TestCase):
         with self.assertRaises(TypeError):
             Rectangle(1, 2, 3, 4.4)
 
+    def test_float_nan_height(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, float('nan'), 8, 8)
+
+    def test_float_nan_x(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, 10, float('nan'), 8)
+
+    def test_float_nan_y(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, 5, 8, float('nan'))
+
+    def test_float_inf_width(self):
+        with self.assertRaises(TypeError):
+            Rectangle(float('inf'), 10, 8, 8)
+
+    def test_float_inf_height(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, float('inf'), 8, 8)
+
+    def test_float_inf_x(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, 10, float('inf'), 8)
+
+    def test_float_inf_y(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, 5, 8, float('inf'))
+
+    def test_float_neg_inf_width(self):
+        with self.assertRaises(TypeError):
+            Rectangle(float('-inf'), 10, 8, 8)
+
+    def test_float_neg_inf_height(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, float('-inf'), 8, 8)
+
+    def test_float_neg_inf_x(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, 10, float('-inf'), 8)
+
+    def test_float_neg_inf_y(self):
+        with self.assertRaises(TypeError):
+            Rectangle(10, 5, 8, float('-inf'))
+
     # list
     def test_list_width(self):
         """fuction that test for TypeError"""
@@ -347,7 +392,8 @@ class TestRectangle(unittest.TestCase):
         with io.StringIO() as buf, redirect_stdout(buf):
             r2.display()
             output = buf.getvalue()
-            self.assertEqual(output, (2 * "\n" + (" " * 3 + "#" * 8 + "\n") * 7))
+            self.assertEqual(
+                output, (2 * "\n" + (" " * 3 + "#" * 8 + "\n") * 7))
 
     ##########################################################
     # update
@@ -372,6 +418,10 @@ class TestRectangle(unittest.TestCase):
         self.assertEqual(r1.width, 331)
         self.assertEqual(r1.height, 454)
         self.assertEqual(r1.y, 1)
+
+        r1.update(55, 55, width=50, height=300, id=80)
+        self.assertEqual(r1.id, 55)
+        self.assertEqual(r1.width, 55)
 
         r1.update()
         self.assertEqual(r1.height, 454)
@@ -502,10 +552,12 @@ class TestRectangle(unittest.TestCase):
         Rectangle.save_to_file(listOfRectsInput)
         listOfRectsOutput = Rectangle.load_from_file()
         self.assertEqual(
-            listOfRectsInput[0].to_dictionary(), listOfRectsOutput[0].to_dictionary()
+            listOfRectsInput[0].to_dictionary(
+            ), listOfRectsOutput[0].to_dictionary()
         )
         self.assertEqual(
-            listOfRectsInput[1].to_dictionary(), listOfRectsOutput[1].to_dictionary()
+            listOfRectsInput[1].to_dictionary(
+            ), listOfRectsOutput[1].to_dictionary()
         )
 
     def test_saveToFile_loadFromFile_empty(self):
@@ -525,10 +577,12 @@ class TestRectangle(unittest.TestCase):
         Rectangle.save_to_file_csv(listOfRectsInput)
         listOfRectsOutput = Rectangle.load_from_file_csv()
         self.assertEqual(
-            listOfRectsInput[0].to_dictionary(), listOfRectsOutput[0].to_dictionary()
+            listOfRectsInput[0].to_dictionary(
+            ), listOfRectsOutput[0].to_dictionary()
         )
         self.assertEqual(
-            listOfRectsInput[1].to_dictionary(), listOfRectsOutput[1].to_dictionary()
+            listOfRectsInput[1].to_dictionary(
+            ), listOfRectsOutput[1].to_dictionary()
         )
 
     def test_saveToCSV_loadFromCSV_empty(self):
